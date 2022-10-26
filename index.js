@@ -1,6 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const db = require('./queries')
+const AAA = require('./AAA/AAA')
+const U_A = require('./User_activities/user_activities')
+const Manager_a = require("./for_managers/manage")
+const Admin_a = require("./for_admins/admn")
 const app = express()
 const port = 3000
 
@@ -16,22 +19,21 @@ app.get('/', (request, response) => {
   })
 
 
-app.post('/users', db.createUser) // tests have been completed successfully
-app.post('/users/login', db.loginUser) // tests have been completed successfully
-app.post('/token', db.RefreshAccessToken) // tests have been completed successfully
-app.post('/users/logout',db.userLogout) //tests have been completed successfully
+app.post('/users', AAA.createUser) // tests have been completed successfully // replaced
+app.post('/users/login', AAA.loginUser) // tests have been completed successfully  // replaced
+app.post('/token', AAA.RefreshAccessToken) // tests have been completed successfully // replaced but token must be valid 
+app.post('/users/logout',AAA.userLogout) //tests have been completed successfully // replaced
+
+app.post('/users/setrole',AAA.authenticateToken,Admin_a.setRole) //tested // replaced
+app.get('/users/get_all', AAA.authenticateToken, Admin_a.getUsers) //tested // 
+
+app.post('/products/add', AAA.authenticateToken, Manager_a.addGoods) //tested // replaced
+app.post('/products/setquantity', AAA.authenticateToken, Manager_a.setGoodsQuantity) //tested // replaced
 
 
-app.post('/users/1', db.authenticateToken, db.getUsers) //tested
-app.post('/users/setrole',db.authenticateToken,db.setRole) //tested
-
-app.post('/products/add', db.authenticateToken, db.addGoods) //tested
-app.post('/products/setquantity', db.authenticateToken, db.setGoodsQuantity) //tested
-
-
-app.get('/products', db.authenticateToken, db.getAllGoods) //tested
-app.get('/products/:name', db.authenticateToken, db.getProductbyName) //tested
-app.post('/products/purchase/:name/:user', db.authenticateToken, db.MakePurchase) //tested
+app.get('/products', AAA.authenticateToken, U_A.getAllGoods) //tested // replaced
+app.get('/products/:name', AAA.authenticateToken, U_A.getProductbyName) //tested // replaced
+app.post('/products/:name/:user', AAA.authenticateToken, U_A.MakePurchase) //tested // replaced
 
 
 
