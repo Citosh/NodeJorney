@@ -9,7 +9,7 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
-  database: 'test_api',
+  database: 'test',
   password: '1111',
   port: 5432,
 })
@@ -23,8 +23,8 @@ const createUser = async(request, response) => {
    const { login, password } = request.body
    const hashedPassword = await bcrypt.hash(request.body.password, 10)
      pool.query('INSERT INTO users (login, password,role) VALUES ($1, $2, $3) RETURNING * ', [login, hashedPassword,"user"], (error, results) => { 
-       if(error) 
-       response.status(406).send("this user alreade exists")
+       if(error)
+          response.status(406).send("this user alreade exists")
       else
          response.status(201).send(`User added with login : ${results.rows[0].login}`)
  })
@@ -39,8 +39,8 @@ const loginUser = async(request,response) =>{
   const { login, password } = request.body
   
 pool.query('SELECT * FROM users WHERE login = $1',[login],(error,result)=>{
-  if(error) 
-  response.status(404)
+  // if(error) 
+  // response.status(404)
   if(!result.rows[0])
   response.status(404).send("invalid login")
   else{
@@ -53,7 +53,7 @@ pool.query('SELECT * FROM users WHERE login = $1',[login],(error,result)=>{
    if(err) 
     response.status(404).send("invalid login")
    else {
-    response.json({accessToken : accessToken, refreshToken : refreshToken})
+    response.send({accessToken : accessToken, refreshToken : refreshToken})
    }
  })
     }
@@ -64,9 +64,10 @@ pool.query('SELECT * FROM users WHERE login = $1',[login],(error,result)=>{
 
 
 const RefreshAccessToken = (req,res) =>{
+
   const refreshToken = req.body.token
     if (refreshToken == null) return res.sendStatus(401)
-    
+  
 
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,(err,user)=>{
         if (err)  

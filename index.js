@@ -19,21 +19,21 @@ app.get('/', (request, response) => {
   })
 
 
-app.post('/users', AAA.createUser) // tests have been completed successfully // replaced
-app.post('/users/login', AAA.loginUser) // tests have been completed successfully  // replaced
-app.post('/token', AAA.RefreshAccessToken) // tests have been completed successfully // replaced but token must be valid 
-app.post('/users/logout',AAA.userLogout) //tests have been completed successfully // replaced
+app.post('/users', AAA.createUser)  
+app.post('/users/login', AAA.loginUser) 
+app.post('/token', AAA.RefreshAccessToken)  // fucked up 
+app.post('/users/logout',AAA.userLogout) 
 
-app.post('/users/setrole',AAA.authenticateToken,Admin_a.setRole) //tested // replaced
-app.get('/users/get_all', AAA.authenticateToken, Admin_a.getUsers) //tested // 
+app.post('/users/setrole',AAA.authenticateToken,Admin_a.setRole) 
+app.get('/users/get_all', AAA.authenticateToken, Admin_a.getUsers) 
 
-app.post('/products/add', AAA.authenticateToken, Manager_a.addGoods) //tested // replaced
-app.post('/products/setquantity', AAA.authenticateToken, Manager_a.setGoodsQuantity) //tested // replaced
+app.post('/products/add', AAA.authenticateToken, Manager_a.addGoods) 
+app.post('/products/setquantity', AAA.authenticateToken, Manager_a.setGoodsQuantity) 
 
 
-app.get('/products', AAA.authenticateToken, U_A.getAllGoods) //tested // replaced
-app.get('/products/:name', AAA.authenticateToken, U_A.getProductbyName) //tested // replaced
-app.post('/products/:name/:user', AAA.authenticateToken, U_A.MakePurchase) //tested // replaced
+app.get('/products', AAA.authenticateToken, U_A.getAllGoods) 
+app.get('/products/:name', AAA.authenticateToken, U_A.getProductbyName)  
+app.post('/products/:name/:user', AAA.authenticateToken, U_A.MakePurchase) 
 
 
 
