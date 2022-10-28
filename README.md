@@ -12,7 +12,7 @@ bcrypt for hashing and secure accounting,
 How to make this work on your machine 
 
 you have to download all npm packages which requires for things above (package.json is attached).
-the next is instalation db tables, you can see the .sql file and you have to create your db and lounch this .sql file with "\i" flag. 
+the next is instalation db tables, you can see the .sql file and you have to create your db and lounch this .sql file with "\i (path to file) " flag. 
 next in every .js file you have this :
 
 const Pool = require('pg').Pool
